@@ -7,8 +7,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * 281. Zigzag Iterator
  * <p>
- *   281. Zigzag Iterator
+ * Question Link: https://leetcode.com/problems/zigzag-iterator/description/
+ *
  * <p>
  * Given two vectors of integers v1 and v2, implement an iterator to return their elements
  * alternately.
