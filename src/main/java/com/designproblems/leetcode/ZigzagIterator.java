@@ -77,6 +77,18 @@ public class ZigzagIterator {
     }
   }
 
+  public ZigzagIterator(List<List<Integer>> list) {
+    this.inputs = new ArrayList<List<Integer>>();
+    this.queue = new LinkedList<Pair<Integer, Integer>>();
+    this.inputs.addAll(list);
+    for (List<Integer> vec : this.inputs) {
+      if (!vec.isEmpty()) {
+        this.queue.add(new Pair<Integer, Integer>(index, 0));
+      }
+      index++;
+    }
+  }
+
   public int next() {
     Pair<Integer, Integer> pointer = this.queue.removeFirst();
     int listIndex = pointer.fst;
@@ -97,7 +109,22 @@ public class ZigzagIterator {
     ZigzagIterator obj = new ZigzagIterator(l1, l2);
     for (int i = 0; i < 6; i++) {
       if (obj.hasNext()) {
-        System.out.println(obj.next());
+        System.out.print(obj.next() + ", ");
+      }
+    }
+    System.out.println("\n=====================");
+    testNList();
+  }
+
+  private static void testNList() {
+    List<Integer> l1 = Arrays.asList(1, 5);
+    List<Integer> l2 = Arrays.asList(2, 6, 9);
+    List<Integer> l3 = Arrays.asList(3, 7, 10, 12, 14);
+    List<Integer> l4 = Arrays.asList(4, 8, 11, 13, 15, 16, 17, 18, 19, 20);
+    ZigzagIterator obj = new ZigzagIterator(Arrays.asList(l1, l2, l3, l4));
+    for (int i = 0; i < 20; i++) {
+      if (obj.hasNext()) {
+        System.out.print(obj.next() + ", ");
       }
     }
   }
