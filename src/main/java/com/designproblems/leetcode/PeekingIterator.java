@@ -48,17 +48,17 @@ import java.util.stream.IntStream;
  * <p>
  *  Follow up: How would you extend your design to be generic and work with all types, not just integer?
  */
-public class PeekingIterator implements Iterator<Integer> {
+public class PeekingIterator<T> implements Iterator<T> {
 
-  Iterator<Integer> iterator = null;
-  Integer peek = null;
+  Iterator<T> iterator = null;
+  T peek = null;
 
-  public PeekingIterator(Iterator<Integer> iterator) {
+  public PeekingIterator(Iterator<T> iterator) {
     this.iterator = iterator;
   }
 
   // Returns the next element in the iteration without advancing the iterator.
-  public Integer peek() {
+  public T peek() {
     if (peek == null) {
       if (!this.iterator.hasNext()) {
         throw new RuntimeException("No more elements found");
@@ -76,9 +76,9 @@ public class PeekingIterator implements Iterator<Integer> {
   // hasNext() and next() should behave the same as in the Iterator interface.
   // Override them if needed.
   @Override
-  public Integer next() {
+  public T next() {
     if (this.peek != null) {
-      Integer tmp = peek;
+      T tmp = peek;
       this.peek = null;
       return tmp;
     }
