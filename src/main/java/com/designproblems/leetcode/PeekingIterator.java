@@ -1,7 +1,9 @@
 package com.designproblems.leetcode;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * 284. Peeking Iterator
@@ -89,6 +91,12 @@ public class PeekingIterator<T> implements Iterator<T> {
     PeekingIterator peekItr = new PeekingIterator(IntStream.range(1, 15).iterator());
     while (peekItr.hasNext()) {
       System.out.println("Peek: " + peekItr.peek() + " , Next: " + peekItr.next());
+    }
+    System.out.println("==========================");
+    Stream<String> chars = "ABCDEFGHIJKLMN".chars().mapToObj(c -> String.valueOf((char) c));
+    PeekingIterator peekItr1 = new PeekingIterator(chars.iterator());
+    while (peekItr1.hasNext()) {
+      System.out.println("Peek: " + peekItr1.peek() + " , Next: " + peekItr1.next());
     }
   }
 }
