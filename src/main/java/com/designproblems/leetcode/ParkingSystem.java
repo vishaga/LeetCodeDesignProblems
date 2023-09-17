@@ -53,7 +53,7 @@ public class ParkingSystem {
   }
 
   public boolean addCar(int carType) {
-    spaces[carType - 1] -= 1;
+    spaces[carType - 1]--;
     return spaces[carType - 1] >= 0;
   }
 
