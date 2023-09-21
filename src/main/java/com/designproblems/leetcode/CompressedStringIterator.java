@@ -1,5 +1,7 @@
 package com.designproblems.leetcode;
 
+import java.util.stream.IntStream;
+
 /**
  * 604. Design Compressed String Iterator
  * <p>
@@ -48,5 +50,44 @@ package com.designproblems.leetcode;
  * <ul/>
  */
 public class CompressedStringIterator {
+
+  String input;
+  int index;
+  int charIndex;
+  int frequency = 0;
+
+  public CompressedStringIterator(String str) {
+    this.input = str;
+  }
+
+  public char next() {
+    if (!hasNext()) {
+      return '!';
+    }
+    if (this.frequency == 0) {
+      calculate();
+    }
+    this.frequency--;
+    return this.input.charAt(charIndex);
+  }
+
+  public boolean hasNext() {
+    return index < this.input.length() || this.frequency > 0;
+  }
+
+  private void calculate() {
+    this.charIndex = index++;
+    while (index < this.input.length() && input.charAt(index) >= '0' && input.charAt(index) <= '9') {
+      this.frequency = this.frequency * 10 + input.charAt(index++) - '0';
+    }
+  }
+
+  public static void main(String[] args) {
+    CompressedStringIterator itr = new CompressedStringIterator("L1e2t1C1o1d1e1");
+    IntStream.range(1, 10).forEach(s -> System.out.print(itr.next()));
+    System.out.println();
+    CompressedStringIterator itr2 = new CompressedStringIterator("L3e4t1C1o1d5e1");
+    IntStream.range(1, 18).forEach(s -> System.out.print(itr2.next()));
+  }
 
 }
