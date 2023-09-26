@@ -1,5 +1,14 @@
 package com.designproblems.leetcode;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
 /**
  * 2590. Design a Todo List
  *
@@ -70,5 +79,63 @@ package com.designproblems.leetcode;
  * <ul/>
  */
 public class TodoList {
+
+  class Task {
+
+    String taskDesc;
+    int dueDate;
+    Set<String> tags;
+    int id;
+    boolean isCompleted;
+
+    Task(int id, String desc, int dueDate, List<String> tags) {
+      this.id = id;
+      this.dueDate = dueDate;
+      this.tags = new HashSet<>(tags);
+      this.taskDesc = desc;
+    }
+  }
+
+
+  Map<Integer, Set<Task>> tasks;
+  int id;
+
+  public TodoList() {
+    this.tasks = new HashMap<>();
+    this.id = 0;
+  }
+
+  public int addTask(int userId, String taskDescription, int dueDate, List<String> tags) {
+    tasks.computeIfAbsent(userId, a -> new TreeSet<>((t1, t2) -> t1.dueDate - t2.dueDate));
+    ++id;
+    tasks.get(userId).add(new Task(id, taskDescription, dueDate, tags));
+    return id;
+  }
+
+  public List<String> getAllTasks(int userId) {
+    return tasks.getOrDefault(userId, new TreeSet<>()).stream().filter(t -> !t.isCompleted)
+        .map(t -> t.taskDesc).collect(Collectors.toList());
+  }
+
+  public List<String> getTasksForTag(int userId, String tag) {
+    return tasks.get(userId).stream().filter(t -> !t.isCompleted).filter(t -> t.tags.contains(tag))
+        .map(t -> t.taskDesc).collect(Collectors.toList());
+  }
+
+  public void completeTask(int userId, int taskId) {
+    tasks.getOrDefault(userId, new TreeSet<>()).stream().filter(t -> t.id == taskId)
+        .forEach(t -> t.isCompleted = true);
+  }
+
+  public static void main(String[] args) {
+    TodoList todo = new TodoList();
+    todo.addTask(1, "TASK1", 50, Arrays.asList("T1"));
+    todo.addTask(1, "TASK2", 10, Arrays.asList("T1", "T2"));
+    todo.addTask(1, "TASK3", 5, Arrays.asList("T3"));
+    todo.addTask(3, "TASK4", 5, Arrays.asList("T5"));
+    System.out.println(todo.getAllTasks(2));
+    System.out.println(todo.getAllTasks(1));
+    System.out.println(todo.getTasksForTag(1, "T2"));
+  }
 
 }
